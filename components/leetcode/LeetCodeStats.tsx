@@ -1,7 +1,7 @@
 'use client';
 
 import { LeetCodeStats as LeetCodeStatsType } from '@/types/leetcode';
-import { CheckCircle, Circle, Medal, BarChart3, Zap, Trophy, Award, CheckCircle2 } from 'lucide-react';
+import { Circle, Trophy } from 'lucide-react';
 
 interface LeetCodeStatsCardProps {
   stats: LeetCodeStatsType;
@@ -12,35 +12,35 @@ export default function LeetCodeStatsCard({ stats }: LeetCodeStatsCardProps) {
     return Math.round((solved / total) * 100);
   };
 
-  const renderProgressBar = (solved: number, total: number, difficulty: 'easy' | 'medium' | 'hard') => {
-    const percentage = calculateProgressPercentage(solved, total);
-    const colors = {
-      easy: {
-        bg: 'bg-green-100',
-        fill: 'bg-green-500',
-        text: 'text-green-700'
-      },
-      medium: {
-        bg: 'bg-yellow-100',
-        fill: 'bg-yellow-500',
-        text: 'text-yellow-700'
-      },
-      hard: {
-        bg: 'bg-red-100',
-        fill: 'bg-red-500',
-        text: 'text-red-700'
-      }
-    };
+  // const renderProgressBar = (solved: number, total: number, difficulty: 'easy' | 'medium' | 'hard') => {
+  //   const percentage = calculateProgressPercentage(solved, total);
+  //   const colors = {
+  //     easy: {
+  //       bg: 'bg-green-100',
+  //       fill: 'bg-green-500',
+  //       text: 'text-green-700'
+  //     },
+  //     medium: {
+  //       bg: 'bg-yellow-100',
+  //       fill: 'bg-yellow-500',
+  //       text: 'text-yellow-700'
+  //     },
+  //     hard: {
+  //       bg: 'bg-red-100',
+  //       fill: 'bg-red-500',
+  //       text: 'text-red-700'
+  //     }
+  //   };
     
-    return (
-      <div className={`w-full h-2 ${colors[difficulty].bg} rounded-full overflow-hidden`}>
-        <div 
-          className={`h-full ${colors[difficulty].fill}`} 
-          style={{ width: `${percentage}%` }}
-        ></div>
-      </div>
-    );
-  };
+  //   return (
+  //     <div className={`w-full h-2 ${colors[difficulty].bg} rounded-full overflow-hidden`}>
+  //       <div 
+  //         className={`h-full ${colors[difficulty].fill}`} 
+  //         style={{ width: `${percentage}%` }}
+  //       ></div>
+  //     </div>
+  //   );
+  // };
 
   return (
     <div className="bg-[#c9b698]/30 rounded-xl p-3">

@@ -37,13 +37,13 @@ export default function LeetCodeProblems({ problems }: LeetCodeProblemsProps) {
     return 'bg-gray-100';
   };
 
-  const getDifficultyCircle = (difficulty: string) => {
-    const lowerDifficulty = difficulty.toLowerCase();
-    if (lowerDifficulty === 'easy') return <Circle size={8} className="fill-green-500 text-green-500" />;
-    if (lowerDifficulty === 'medium') return <Circle size={8} className="fill-yellow-500 text-yellow-500" />;
-    if (lowerDifficulty === 'hard') return <Circle size={8} className="fill-red-500 text-red-500" />;
-    return <Circle size={8} className="fill-gray-500 text-gray-500" />;
-  };
+  // const getDifficultyCircle = (difficulty: string) => {
+  //   const lowerDifficulty = difficulty.toLowerCase();
+  //   if (lowerDifficulty === 'easy') return <Circle size={8} className="fill-green-500 text-green-500" />;
+  //   if (lowerDifficulty === 'medium') return <Circle size={8} className="fill-yellow-500 text-yellow-500" />;
+  //   if (lowerDifficulty === 'hard') return <Circle size={8} className="fill-red-500 text-red-500" />;
+  //   return <Circle size={8} className="fill-gray-500 text-gray-500" />;
+  // };
 
   return (
     <div>
