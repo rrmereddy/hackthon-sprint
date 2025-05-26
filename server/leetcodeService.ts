@@ -1,3 +1,4 @@
+// server/leetcodeService.ts
 'use server';
 
 import { LeetCodeStats, LeetCodeSubmission, LeetCodeProblem, LeetCodeUserProfile } from '@/types/leetcode';
@@ -75,10 +76,10 @@ export async function fetchLeetCodeSubmissions(username: string, limit: number =
       id: submission.id,
       title: submission.title,
       titleSlug: submission.titleSlug,
-      timestamp: new Date(submission.timestamp * 1000).toISOString(),
+      timestamp: parseInt(submission.timestamp, 10) * 1000, // Convert seconds to milliseconds
       status: submission.statusDisplay,
       language: submission.lang,
-      problemId: submission.id,
+      problemId: submission.id, // Assuming API submission.id is the problem's ID for this context
       problemName: submission.title,
       runtime: submission.runtime || 'N/A',
       memory: submission.memory || 'N/A',
@@ -92,7 +93,7 @@ export async function fetchLeetCodeSubmissions(username: string, limit: number =
 
 export async function fetchLeetCodeProblems(username: string, limit: number = 20): Promise<LeetCodeProblem[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/problems`, { next: { revalidate: 86400 } });
+    const response = await fetch(`${API_BASE_URL}/problems`, { next: { revalidate: 86400 } }); // Cache for 24 hours
     
     if (!response.ok) {
       throw new Error('Failed to fetch LeetCode problems');
@@ -108,10 +109,10 @@ export async function fetchLeetCodeProblems(username: string, limit: number = 20
       difficulty: problem.difficulty.level === 1 ? 'Easy' : problem.difficulty.level === 2 ? 'Medium' : 'Hard',
       isPaidOnly: problem.paid_only,
       status: problem.status || null,
-      tags: problem.tags || [],
+      tags: problem.tags || [], // Assuming tags are directly available or need to be mapped if structure is different
       acceptanceRate: problem.stat.total_acs && problem.stat.total_submitted ? 
-        (problem.stat.total_acs / problem.stat.total_submitted * 100).toFixed(1) : 
-        '0.0',
+        (problem.stat.total_acs / problem.stat.total_submitted * 100) : // Keep as number
+        0,
       url: `https://leetcode.com/problems/${problem.stat.question__title_slug}/`,
     }));
   } catch (error) {
@@ -122,7 +123,7 @@ export async function fetchLeetCodeProblems(username: string, limit: number = 20
 
 export async function fetchDailyChallenge(): Promise<LeetCodeProblem | null> {
   try {
-    const response = await fetch(`${API_BASE_URL}/daily`, { next: { revalidate: 86400 } });
+    const response = await fetch(`${API_BASE_URL}/daily`, { next: { revalidate: 86400 } }); // Cache for 24 hours
     
     if (!response.ok) {
       throw new Error('Failed to fetch daily challenge');
@@ -136,9 +137,9 @@ export async function fetchDailyChallenge(): Promise<LeetCodeProblem | null> {
       titleSlug: data.question.titleSlug,
       difficulty: data.question.difficulty,
       isPaidOnly: data.question.isPaidOnly,
-      status: null,
+      status: null, // Daily challenge might not have a user-specific status here
       tags: data.question.topicTags?.map((tag: any) => tag.name) || [],
-      acceptanceRate: data.question.acRate ? (data.question.acRate * 100).toFixed(1) : '0.0',
+      acceptanceRate: data.question.acRate ? (data.question.acRate * 100) : 0, // Keep as number
       url: `https://leetcode.com/problems/${data.question.titleSlug}/`,
     };
   } catch (error) {
@@ -191,23 +192,18 @@ function generateMockSubmissions(limit: number): LeetCodeSubmission[] {
     { id: 3, name: 'Longest Substring Without Repeating Characters', slug: 'longest-substring-without-repeating-characters' },
     { id: 4, name: 'Median of Two Sorted Arrays', slug: 'median-of-two-sorted-arrays' },
     { id: 5, name: 'Longest Palindromic Substring', slug: 'longest-palindromic-substring' },
-    { id: 6, name: 'Zigzag Conversion', slug: 'zigzag-conversion' },
-    { id: 7, name: 'Reverse Integer', slug: 'reverse-integer' },
-    { id: 8, name: 'String to Integer (atoi)', slug: 'string-to-integer-atoi' },
-    { id: 9, name: 'Palindrome Number', slug: 'palindrome-number' },
-    { id: 10, name: 'Regular Expression Matching', slug: 'regular-expression-matching' },
   ];
   
   return Array.from({ length: limit }, (_, i) => {
     const randomProblem = problems[Math.floor(Math.random() * problems.length)];
     const date = new Date();
-    date.setDate(date.getDate() - i);
+    date.setDate(date.getDate() - i); // Simulate submissions over a few days
     
     return {
-      id: `${i}`,
+      id: `${i + 1}-${randomProblem.id}`, // Ensure unique ID for mock
       title: randomProblem.name,
       titleSlug: randomProblem.slug,
-      timestamp: date.toISOString(),
+      timestamp: date.getTime(), // Use number for timestamp
       status: statuses[Math.floor(Math.random() * statuses.length)],
       language: languages[Math.floor(Math.random() * languages.length)],
       problemId: randomProblem.id.toString(),
@@ -229,9 +225,9 @@ function generateMockProblems(limit: number): LeetCodeProblem[] {
   ];
   
   return Array.from({ length: limit }, (_, i) => {
-    const id = i + 1;
-    const title = `Problem ${id}`;
-    const titleSlug = `problem-${id}`;
+    const id = i + 100; // Avoid collision with real problem IDs if possible
+    const title = `Mock Problem ${id}`;
+    const titleSlug = `mock-problem-${id}`;
     const difficulty = difficulties[Math.floor(Math.random() * difficulties.length)];
     const randomTags = Array.from(
       { length: Math.floor(Math.random() * 4) + 1 },
@@ -245,9 +241,9 @@ function generateMockProblems(limit: number): LeetCodeProblem[] {
       difficulty,
       isPaidOnly: Math.random() > 0.8,
       status: Math.random() > 0.6 ? 'ac' : null,
-      tags: [...new Set(randomTags)],
-      acceptanceRate: (Math.random() * 50 + 30).toFixed(1),
+      tags: [...new Set(randomTags)], // Ensure unique tags
+      acceptanceRate: (Math.random() * 50 + 30), // Keep as number
       url: `https://leetcode.com/problems/${titleSlug}/`,
     };
   });
-} 
+}
