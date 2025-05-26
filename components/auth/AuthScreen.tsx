@@ -3,10 +3,9 @@
 import { useState } from 'react';
 import { Github, Code, User, LockKeyhole, LogIn } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
-import Image from 'next/image';
 
 export default function AuthScreen() {
-  const { signInWithGitHub, signInWithLeetCode, isAuthenticated } = useAuth();
+  const { signInWithGitHub, signInWithLeetCode } = useAuth();
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [provider, setProvider] = useState<'github' | 'leetcode' | null>(null);
   const [username, setUsername] = useState('');

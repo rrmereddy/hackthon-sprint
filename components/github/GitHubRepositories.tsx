@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { GitHubRepository } from '@/server/githubService';
-import { Star, GitFork, Code, Eye, Clock, ArrowUpRight, Filter } from 'lucide-react';
+import { Star, GitFork, Clock, ArrowUpRight, Filter } from 'lucide-react';
 
 export default function GitHubRepositories({ 
   repositories,

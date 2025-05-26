@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { fetchGitHubUser, fetchGitHubRepositories, generateMockContributions, GitHubRepository } from '@/server/githubService';
 import { useQuery } from '@tanstack/react-query';
-import { ChevronDown, ChevronRight, Loader2, AlertCircle, Github, X, Info, Maximize2, Minimize2, ChevronLeft, ExternalLink, Users, Calendar, Star } from 'lucide-react';
+import { Loader2, AlertCircle, Github, Maximize2, Minimize2, ChevronLeft, ExternalLink, Users, Calendar, Star } from 'lucide-react';
 import GitHubOverview from './GitHubOverview';
 import GitHubRepositories from './GitHubRepositories';
 import GitHubContributions from './GitHubContributions';
@@ -106,9 +106,11 @@ export default function GitHubDashboard({ onExpand, isExpanded }: GitHubDashboar
               <div>
                 <p className="text-[#5c4a32]/60">Owner</p>
                 <div className="flex items-center mt-1">
-                  <img 
+                  <Image
                     src={selectedRepo.owner.avatar_url} 
                     alt={selectedRepo.owner.login}
+                    width={50}
+                    height={50}
                     className="w-5 h-5 rounded-full mr-2"
                   />
                   <a
@@ -297,14 +299,14 @@ export default function GitHubDashboard({ onExpand, isExpanded }: GitHubDashboar
         </button>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 flex-1">
-        <div className="md:col-span-1 max-h-full overflow-hidden">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-2 flex-1 overflow-hidden">
+        <div className="md:col-span-1 h-full overflow-y-auto">
           {githubUser && (
             <GitHubOverview user={githubUser} />
           )}
         </div>
         
-        <div className="md:col-span-2 space-y-2 max-h-full overflow-auto">
+        <div className="md:col-span-2 space-y-2 h-full overflow-y-auto">
           <GitHubContributions contributions={contributions} />
           
           {repositories && (

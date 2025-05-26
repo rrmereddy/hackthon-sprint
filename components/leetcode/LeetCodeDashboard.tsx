@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useQuery } from '@tanstack/react-query';
 import { fetchLeetCodeStats, fetchLeetCodeSubmissions, fetchLeetCodeProblems, fetchLeetCodeUserProfile } from '@/server/leetcodeService';
-import { Loader2, AlertCircle, Code, Maximize2, Minimize2, ChevronRight, ChevronDown, CheckCircle, Circle, Trophy } from 'lucide-react';
+import { Loader2, AlertCircle, Code, Maximize2, Minimize2, ChevronRight, ChevronDown, Circle, Trophy } from 'lucide-react';
 import LeetCodeStatsCard from './LeetCodeStats';
 import LeetCodeSubmissions from './LeetCodeSubmissions';
 import LeetCodeProblems from './LeetCodeProblems';
@@ -194,7 +194,7 @@ export default function LeetCodeDashboard({ onExpand, isExpanded }: LeetCodeDash
         </button>
       </div>
       
-      <div className="flex-1 max-h-full overflow-auto space-y-2">
+      <div className="flex-1 overflow-y-auto space-y-2">
         <LeetCodeStatsCard stats={stats} />
         
         <div className="bg-[#c9b698]/30 rounded-xl">

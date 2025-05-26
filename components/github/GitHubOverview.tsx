@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react';
 import { GitHubUser } from '@/server/githubService';
-import { Calendar, Star, GitFork, Users, Link2, MapPin, Building, Mail } from 'lucide-react';
+import { Calendar, Star, Users, Link2, MapPin, Building, Mail } from 'lucide-react';
 import Image from 'next/image';
 
 export default function GitHubOverview({ user }: { user: GitHubUser }) {
@@ -17,16 +17,16 @@ export default function GitHubOverview({ user }: { user: GitHubUser }) {
     });
   }, [user.created_at]);
 
-  const lastActive = useMemo(() => {
-    if (!user.updated_at) return '';
-    
-    const date = new Date(user.updated_at);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  }, [user.updated_at]);
+  // const lastActive = useMemo(() => {
+  //   if (!user.updated_at) return '';
+  //
+  //   const date = new Date(user.updated_at);
+  //   return date.toLocaleDateString('en-US', {
+  //     year: 'numeric',
+  //     month: 'long',
+  //     day: 'numeric'
+  //   });
+  // }, [user.updated_at]);
 
   return (
     <div className="bg-[#c9b698]/30 rounded-xl p-3 flex flex-col">

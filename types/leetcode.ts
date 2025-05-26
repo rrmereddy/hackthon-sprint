@@ -17,7 +17,7 @@ export type LeetCodeSubmission = {
   id: string;
   title: string;
   titleSlug: string;
-  timestamp: string;
+  timestamp: number;
   status: string;
   language: string;
   problemId: string;
